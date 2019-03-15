@@ -1,5 +1,5 @@
 diff --git a/libstdc++-v3/include/bits/algorithmfwd.h b/libstdc++-v3/include/bits/algorithmfwd.h
-index 40e051aa9e3..70ea4bc5bff 100644
+index 40e051aa9e3..824202677b3 100644
 --- a/libstdc++-v3/include/bits/algorithmfwd.h
 +++ b/libstdc++-v3/include/bits/algorithmfwd.h
 @@ -191,21 +191,29 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
@@ -7,7 +7,7 @@ index 40e051aa9e3..70ea4bc5bff 100644
    // adjacent_find
  
 +#if __cplusplus > 201703L
-+#  define __cpp_lib_constexpr_algorithms
++#  define __cpp_lib_constexpr_algorithms 201711
 +#endif
 +
  #if __cplusplus >= 201103L
@@ -386,7 +386,17 @@ index 40e051aa9e3..70ea4bc5bff 100644
      pair<_IIter1, _IIter2>
      mismatch(_IIter1, _IIter1, _IIter2, _BinaryPredicate);
  
-@@ -756,56 +824,68 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -748,64 +816,78 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+ #endif
+ 
+   template<typename _FIter, typename _Tp>
++    _GLIBCXX20_CONSTEXPR
+     void
+     replace(_FIter, _FIter, const _Tp&, const _Tp&);
+ 
+   template<typename _FIter, typename _Predicate, typename _Tp>
++    _GLIBCXX20_CONSTEXPR
+     void
      replace_if(_FIter, _FIter, _Predicate, const _Tp&);
  
    template<typename _FIter1, typename _FIter2>
@@ -455,7 +465,7 @@ index 40e051aa9e3..70ea4bc5bff 100644
      _OIter
      set_union(_IIter1, _IIter1, _IIter2, _IIter2, _OIter, _Compare);
  
-@@ -826,19 +906,23 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -826,19 +908,23 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
      stable_sort(_RAIter, _RAIter, _Compare);
  
    template<typename _IIter, typename _OIter, typename _UnaryOperation>
@@ -824,7 +834,7 @@ index 65215c7918b..60f45841bb7 100644
      __negate(_Iter_pred<_Predicate> __pred)
      { return _Iter_negate<_Predicate>(_GLIBCXX_MOVE(__pred._M_pred)); }
 diff --git a/libstdc++-v3/include/bits/stl_algo.h b/libstdc++-v3/include/bits/stl_algo.h
-index cb870c41dc1..bcdbc28745a 100644
+index cb870c41dc1..fa5368ba400 100644
 --- a/libstdc++-v3/include/bits/stl_algo.h
 +++ b/libstdc++-v3/include/bits/stl_algo.h
 @@ -97,6 +97,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
@@ -1555,7 +1565,23 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      transform(_InputIterator1 __first1, _InputIterator1 __last1,
  	      _InputIterator2 __first2, _OutputIterator __result,
-@@ -4406,6 +4490,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4342,6 +4426,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+    *  @p __old_value then the assignment @c *i = @p __new_value is performed.
+   */
+   template<typename _ForwardIterator, typename _Tp>
++    _GLIBCXX20_CONSTEXPR
+     void
+     replace(_ForwardIterator __first, _ForwardIterator __last,
+ 	    const _Tp& __old_value, const _Tp& __new_value)
+@@ -4374,6 +4459,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+    *  is true then the assignment @c *i = @p __new_value is performed.
+   */
+   template<typename _ForwardIterator, typename _Predicate, typename _Tp>
++    _GLIBCXX20_CONSTEXPR
+     void
+     replace_if(_ForwardIterator __first, _ForwardIterator __last,
+ 	       _Predicate __pred, const _Tp& __new_value)
+@@ -4406,6 +4492,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
     *  @p [__first,__last).
    */
    template<typename _ForwardIterator, typename _Generator>
@@ -1563,7 +1589,7 @@ index cb870c41dc1..bcdbc28745a 100644
      void
      generate(_ForwardIterator __first, _ForwardIterator __last,
  	     _Generator __gen)
-@@ -4437,6 +4522,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4437,6 +4524,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
     *  DR 865. More algorithms that throw away information
    */
    template<typename _OutputIterator, typename _Size, typename _Generator>
@@ -1571,7 +1597,7 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      generate_n(_OutputIterator __first, _Size __n, _Generator __gen)
      {
-@@ -4473,6 +4559,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4473,6 +4561,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
     *  Assignable?
    */
    template<typename _InputIterator, typename _OutputIterator>
@@ -1579,7 +1605,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      unique_copy(_InputIterator __first, _InputIterator __last,
  		_OutputIterator __result)
-@@ -4514,6 +4601,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4514,6 +4603,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator, typename _OutputIterator,
  	   typename _BinaryPredicate>
@@ -1587,7 +1613,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      unique_copy(_InputIterator __first, _InputIterator __last,
  		_OutputIterator __result,
-@@ -4852,6 +4940,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4852,6 +4942,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
  
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator, typename _Compare>
@@ -1595,7 +1621,7 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      __merge(_InputIterator1 __first1, _InputIterator1 __last1,
  	    _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -4896,6 +4985,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4896,6 +4987,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator>
@@ -1603,7 +1629,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      merge(_InputIterator1 __first1, _InputIterator1 __last1,
  	  _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -4946,6 +5036,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -4946,6 +5038,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator, typename _Compare>
@@ -1611,7 +1637,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      merge(_InputIterator1 __first1, _InputIterator1 __last1,
  	  _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5063,6 +5154,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5063,6 +5156,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator,
  	   typename _Compare>
@@ -1619,7 +1645,7 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      __set_union(_InputIterator1 __first1, _InputIterator1 __last1,
  		_InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5113,6 +5205,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5113,6 +5207,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator>
@@ -1627,7 +1653,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_union(_InputIterator1 __first1, _InputIterator1 __last1,
  	      _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5163,6 +5256,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5163,6 +5258,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator, typename _Compare>
@@ -1635,7 +1661,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_union(_InputIterator1 __first1, _InputIterator1 __last1,
  	      _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5194,6 +5288,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5194,6 +5290,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator,
  	   typename _Compare>
@@ -1643,7 +1669,7 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      __set_intersection(_InputIterator1 __first1, _InputIterator1 __last1,
  		       _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5234,6 +5329,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5234,6 +5331,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator>
@@ -1651,7 +1677,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_intersection(_InputIterator1 __first1, _InputIterator1 __last1,
  		     _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5283,6 +5379,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5283,6 +5381,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator, typename _Compare>
@@ -1659,7 +1685,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_intersection(_InputIterator1 __first1, _InputIterator1 __last1,
  		     _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5312,6 +5409,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5312,6 +5411,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator,
  	   typename _Compare>
@@ -1667,7 +1693,7 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      __set_difference(_InputIterator1 __first1, _InputIterator1 __last1,
  		     _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5356,6 +5454,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5356,6 +5456,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator>
@@ -1675,7 +1701,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_difference(_InputIterator1 __first1, _InputIterator1 __last1,
  		   _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5407,6 +5506,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5407,6 +5508,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator, typename _Compare>
@@ -1683,7 +1709,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_difference(_InputIterator1 __first1, _InputIterator1 __last1,
  		   _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5436,6 +5536,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5436,6 +5538,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator,
  	   typename _Compare>
@@ -1691,7 +1717,7 @@ index cb870c41dc1..bcdbc28745a 100644
      _OutputIterator
      __set_symmetric_difference(_InputIterator1 __first1,
  			       _InputIterator1 __last1,
-@@ -5486,6 +5587,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5486,6 +5589,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator>
@@ -1699,7 +1725,7 @@ index cb870c41dc1..bcdbc28745a 100644
      inline _OutputIterator
      set_symmetric_difference(_InputIterator1 __first1, _InputIterator1 __last1,
  			     _InputIterator2 __first2, _InputIterator2 __last2,
-@@ -5537,6 +5639,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
+@@ -5537,6 +5641,7 @@ _GLIBCXX_BEGIN_NAMESPACE_ALGO
    */
    template<typename _InputIterator1, typename _InputIterator2,
  	   typename _OutputIterator, typename _Compare>
@@ -2294,6 +2320,28 @@ index 02c6f4b4dbe..1a83904fc63 100644
      inline bool
      operator>=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
      { return !(__one < __two); }
+diff --git a/libstdc++-v3/include/std/utility b/libstdc++-v3/include/std/utility
+index c687c1d8697..7a7d21be4d6 100644
+--- a/libstdc++-v3/include/std/utility
++++ b/libstdc++-v3/include/std/utility
+@@ -280,11 +280,17 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
+ 
+ #define __cpp_lib_exchange_function 201304
+ 
++#if __cplusplus > 201703L
++#define __cpp_lib_constexpr_algorithms 201711
++#endif
++
+   /// Assign @p __new_val to @p __obj and return its previous value.
+   template <typename _Tp, typename _Up = _Tp>
++    _GLIBCXX20_CONSTEXPR
+     inline _Tp
+     exchange(_Tp& __obj, _Up&& __new_val)
+     { return std::__exchange(__obj, std::forward<_Up>(__new_val)); }
++
+ #endif
+ 
+   // Stores a tuple of indices.  Used by tuple and pair, and by bind() to
 diff --git a/libstdc++-v3/testsuite/23_containers/array/comparison_operators/constexpr.cc b/libstdc++-v3/testsuite/23_containers/array/comparison_operators/constexpr.cc
 new file mode 100644
 index 00000000000..075773a8581
@@ -2332,3 +2380,2090 @@ index 00000000000..075773a8581
 +static_assert(a4 > a1);
 +static_assert(a1 <= a3);
 +static_assert(a4 >= a1);
+diff --git a/libstdc++-v3/testsuite/25_algorithms/adjacent_find/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/adjacent_find/constexpr.cc
+new file mode 100644
+index 00000000000..267c71717f0
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/adjacent_find/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++
++  const auto out0x = std::adjacent_find(car.begin(), car.end());
++
++  const auto out1x = std::adjacent_find(car.begin(), car.end(),
++					std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/all_of/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/all_of/constexpr.cc
+new file mode 100644
+index 00000000000..2f80720e0de
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/all_of/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 6> cae{{0, 2, 4, 6, 8, 10}};
++
++  const auto out2 = std::all_of(cae.begin(), cae.end(),
++			        [](int i){ return i % 2 == 0; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/any_of/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/any_of/constexpr.cc
+new file mode 100644
+index 00000000000..0c161130ff5
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/any_of/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto out3 = std::any_of(ca0.begin(), ca0.end(),
++			        [](int i){ return i % 2 == 0; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/binary_search/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/binary_search/constexpr.cc
+new file mode 100644
+index 00000000000..a2e42e42021
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/binary_search/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto out4 = std::binary_search(ca0.begin(), ca0.end(), 5);
++
++  const auto out5 = std::binary_search(ca0.begin(), ca0.end(), 5,
++				       std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/copy/constexpr.cc
+new file mode 100644
+index 00000000000..d5696f408e1
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/copy/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++
++  const auto out6 = std::copy(ca0.begin(), ca0.begin() + 8, ma0.begin() + 2);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/copy_backward/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/copy_backward/constexpr.cc
+new file mode 100644
+index 00000000000..c75be072fa9
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/copy_backward/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++  const auto out7 = std::copy_backward(ca0.begin(), ca0.begin() + 8,
++				       ma0.begin() + 10);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/copy_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/copy_if/constexpr.cc
+new file mode 100644
+index 00000000000..7e0d72a6967
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/copy_if/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++  std::copy_if(ca0.begin(), ca0.end(), ma0.begin(),
++	       [](int i){ return i % 2 == 1; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/copy_n/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/copy_n/constexpr.cc
+new file mode 100644
+index 00000000000..3eebe3c4297
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/copy_n/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++  std::copy_n(ca0.begin(), 12, ma0.begin());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/count/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/count/constexpr.cc
+new file mode 100644
+index 00000000000..f83ffe3d58a
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/count/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto out8 = std::count(ca0.begin(), ca0.end(), 6);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/count_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/count_if/constexpr.cc
+new file mode 100644
+index 00000000000..2f2b28d9162
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/count_if/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto out9 = std::count_if(ca0.begin(), ca0.end(),
++				  [](int i){ return i % 2 == 0; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/equal/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/equal/constexpr.cc
+new file mode 100644
+index 00000000000..0461abddce0
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/equal/constexpr.cc
+@@ -0,0 +1,35 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> ca1{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++
++  const auto outa = std::equal(ca0.begin(), ca0.end(), ca1.begin());
++
++  const auto outb = std::equal(ca0.begin(), ca0.end(), cas.begin(),
++			       [](int i, int j){ return i + 3 == j; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/equal_range/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/equal_range/constexpr.cc
+new file mode 100644
+index 00000000000..e2c1db96da0
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/equal_range/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++
++  const auto outc = std::equal_range(car.begin(), car.end(), 6);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/fill/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/fill/constexpr.cc
+new file mode 100644
+index 00000000000..3a250ec12f9
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/fill/constexpr.cc
+@@ -0,0 +1,29 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++  std::fill(ma0.begin(), ma0.end(), 66);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/fill_n/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/fill_n/constexpr.cc
+new file mode 100644
+index 00000000000..5afdfcfa685
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/fill_n/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++
++  const auto outd = std::fill_n(ma0.begin() + 5, 6, 77);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/find/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/find/constexpr.cc
+new file mode 100644
+index 00000000000..d484039e61e
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/find/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++
++  const auto oute = std::find(ca0.begin(), ca0.end(), 5);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/find_end/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/find_end/constexpr.cc
+new file mode 100644
+index 00000000000..bb52ae9e94c
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/find_end/constexpr.cc
+@@ -0,0 +1,37 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++  constexpr std::array<int, 3> cam{{4, 5, 6}};
++  constexpr std::array<int, 3> camm{{-4, -5, -6}};
++
++  const auto outf = std::find_end(ca0.begin(), ca0.end(),
++				  cam.begin(), cam.end());
++
++  const auto outg = std::find_end(ca0.begin(), ca0.end(),
++				  camm.begin(), camm.end(),
++				  [](int i, int j){ return i + 1 == -j; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/find_first_of/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/find_first_of/constexpr.cc
+new file mode 100644
+index 00000000000..79f15595db8
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/find_first_of/constexpr.cc
+@@ -0,0 +1,36 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++
++  const auto outh = std::find_first_of(ca0.begin(), ca0.end(),
++				       cas.begin(), cas.end());
++
++  const auto outi = std::find_first_of(ca0.begin(), ca0.end(),
++				       cas.begin(), cas.end(),
++				       [](int i, int j){ return i + 1 == j; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/find_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/find_if/constexpr.cc
+new file mode 100644
+index 00000000000..c13a65e2873
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/find_if/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++
++  const auto outj = std::find_if(ca0.begin(), ca0.end(),
++				 [](int i){ return i == 6; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/find_if_not/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/find_if_not/constexpr.cc
+new file mode 100644
+index 00000000000..085e1956c4d
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/find_if_not/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outk = std::find_if_not(ca0.begin(), ca0.end(),
++				     [](int i){ return i <= 6; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/for_each/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/for_each/constexpr.cc
+new file mode 100644
+index 00000000000..06dd2b6b9ba
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/for_each/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  int tot = 0;
++  auto sum = [&tot](int i){ tot += i; };
++  auto sum2 = std::for_each(ca0.begin(), ca0.end(), sum);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/generate/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/generate/constexpr.cc
+new file mode 100644
+index 00000000000..fa39b958b79
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/generate/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++
++  const auto outl = std::generate_n(ma0.begin(), 6, [](){ return 42; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/generate_n/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/generate_n/constexpr.cc
+new file mode 100644
+index 00000000000..fa39b958b79
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/generate_n/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++
++  const auto outl = std::generate_n(ma0.begin(), 6, [](){ return 42; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/is_heap/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/is_heap/constexpr.cc
+new file mode 100644
+index 00000000000..498e13bdc3f
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/is_heap/constexpr.cc
+@@ -0,0 +1,37 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  // heap
++  constexpr std::array<int, 23>
++  ah{{22,
++      21, 20,
++      17, 16, 19, 18,
++      11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4}};
++
++  const auto outo = std::is_heap(ah.begin(), ah.end());
++
++  const auto outp = std::is_heap(ah.begin(), ah.end(), std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/is_heap_until/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/is_heap_until/constexpr.cc
+new file mode 100644
+index 00000000000..07603297cdd
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/is_heap_until/constexpr.cc
+@@ -0,0 +1,38 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  // heap
++  constexpr std::array<int, 23>
++  ahu{{22,
++       21, 20,
++       17, 16, 19, 18,//v
++       11, 10,  9,  8, 23, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4}};
++
++  const auto outq = std::is_heap_until(ahu.begin(), ahu.end());
++
++  const auto outr = std::is_heap_until(ahu.begin(), ahu.end(),
++				       std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/is_partitioned/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/is_partitioned/constexpr.cc
+new file mode 100644
+index 00000000000..7ad52249fd3
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/is_partitioned/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> caeo{{0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 11}};
++
++  const auto outs = std::is_partitioned(caeo.begin(), caeo.end(),
++					[](int i){ return i % 2 == 0; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/is_permutation/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/is_permutation/constexpr.cc
+new file mode 100644
+index 00000000000..3ee3a2faca2
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/is_permutation/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cap{{2, 1, 3, 6, 7, 5, 4, 8, 10, 9, 0, 11}};
++
++  const auto outt = std::is_permutation(ca0.begin(), ca0.end(), cap.begin());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/is_sorted/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/is_sorted/constexpr.cc
+new file mode 100644
+index 00000000000..6822774c45b
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/is_sorted/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outv = std::is_sorted(ca0.begin(), ca0.end());
++
++  const auto outw = std::is_sorted(ca0.begin(), ca0.end(),
++				   std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/is_sorted_until/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/is_sorted_until/constexpr.cc
+new file mode 100644
+index 00000000000..3a656a0ea2d
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/is_sorted_until/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> aus{{0, 1, 2, 3, 4, 5, 66, 7, 8, 9, 10, 11}};
++
++  const auto outx = std::is_sorted_until(aus.begin(), aus.end());
++
++  const auto outy = std::is_sorted_until(aus.begin(), aus.end(),
++					 std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/lexicographical_compare/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/lexicographical_compare/constexpr.cc
+new file mode 100644
+index 00000000000..edf72d22efd
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/lexicographical_compare/constexpr.cc
+@@ -0,0 +1,36 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> ca1{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outz = !std::lexicographical_compare(ca0.begin(), ca0.end(),
++						  ca1.begin(), ca1.end());
++
++  const auto outaa = !std::lexicographical_compare(ca0.begin(), ca0.end(),
++						   ca1.begin(), ca1.end(),
++						   std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/lower_bound/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/lower_bound/constexpr.cc
+new file mode 100644
+index 00000000000..df6ae039f68
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/lower_bound/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outbb = std::lower_bound(ca0.begin(), ca0.end(), 6);
++
++  const auto outcc = std::lower_bound(ca0.begin(), ca0.end(), 6,
++				      std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/merge/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/merge/constexpr.cc
+new file mode 100644
+index 00000000000..c4ad6abf30a
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/merge/constexpr.cc
+@@ -0,0 +1,38 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++  constexpr std::array<int, 3> camm{{-4, -5, -6}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outdd = std::merge(ca0.begin(), ca0.end(),
++				cas.begin(), cas.end(), out0.begin());
++
++  const auto outee = std::merge(ca0.begin(), ca0.end(),
++				camm.begin(), camm.end(), out0.begin(),
++				[](int i, int j){ return i < -j; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/mismatch/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/mismatch/constexpr.cc
+new file mode 100644
+index 00000000000..ac4dd73f9be
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/mismatch/constexpr.cc
+@@ -0,0 +1,34 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++  constexpr std::array<int, 12> cax{{0, 1, 2, 3, 4, 5, 66, 7, 8, 99, 10, 11}};
++
++  const auto outff = std::mismatch(ca0.begin(), ca0.end(), cax.begin());
++
++  const auto outgg = std::mismatch(ca0.begin(), ca0.end(), cax.begin(),
++				   std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/none_of/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/none_of/constexpr.cc
+new file mode 100644
+index 00000000000..57f7d6a6350
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/none_of/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outhh = std::none_of(ca0.begin(), ca0.end(),
++				  [](int i){ return i > 12; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/partition_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/partition_copy/constexpr.cc
+new file mode 100644
+index 00000000000..773d51ecfad
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/partition_copy/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outii = std::partition_copy(ca0.begin(), ca0.end(),
++					 out0.begin(), out1.begin(),
++					 [](int i){ return i % 2 == 0; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/partition_point/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/partition_point/constexpr.cc
+new file mode 100644
+index 00000000000..9940c0e9699
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/partition_point/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> caeo{{0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 11}};
++
++  const auto outjj = std::partition_point(caeo.begin(), caeo.end(),
++					  [](int i){ return i % 2 == 0; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/remove/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/remove/constexpr.cc
+new file mode 100644
+index 00000000000..13e22e62295
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/remove/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ar4{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outkk = std::remove(ar4.begin(), ar4.end(), 7);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/remove_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/remove_copy/constexpr.cc
+new file mode 100644
+index 00000000000..bc5849b14fd
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/remove_copy/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outmm = std::remove_copy(ca0.begin(), ca0.end(), out0.begin(), 6);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/remove_copy_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/remove_copy_if/constexpr.cc
+new file mode 100644
+index 00000000000..bca21b6ddb2
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/remove_copy_if/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outnn = std::remove_copy_if(ca0.begin(), ca0.end(), out0.begin(),
++					 [](int i){ return i == 7; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/remove_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/remove_if/constexpr.cc
+new file mode 100644
+index 00000000000..98ffcfad21f
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/remove_if/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ac2{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++
++  const auto outll = std::remove_if(ac2.begin(), ac2.end(),
++				    [](int i){ return i == 7; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/replace_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/replace_copy/constexpr.cc
+new file mode 100644
+index 00000000000..913e51f89e2
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/replace_copy/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outoo = std::replace_copy(ca0.begin(), ca0.end(),
++				       out0.begin(), 6, 66);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/replace_copy_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/replace_copy_if/constexpr.cc
+new file mode 100644
+index 00000000000..59380ef802a
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/replace_copy_if/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outpp = std::replace_copy_if(ca0.begin(), ca0.end(), out0.begin(),
++					  [](int i){ return i < 6; }, 66);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/replace_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/replace_if/constexpr.cc
+new file mode 100644
+index 00000000000..7d5a06608d5
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/replace_if/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ar0{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++
++  std::replace_if(ar0.begin(), ar0.end(), [](int i){ return i % 2 == 1; }, 42);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/reverse_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/reverse_copy/constexpr.cc
+new file mode 100644
+index 00000000000..f2c95123d8e
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/reverse_copy/constexpr.cc
+@@ -0,0 +1,31 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outqq = std::reverse_copy(ca0.rbegin(), ca0.rend(), out0.begin());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/rotate_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/rotate_copy/constexpr.cc
+new file mode 100644
+index 00000000000..bdcf306d09a
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/rotate_copy/constexpr.cc
+@@ -0,0 +1,32 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outrr = std::rotate_copy(ca0.begin(), ca0.begin() + 6,
++				      ca0.end(), out0.begin());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/search/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/search/constexpr.cc
+new file mode 100644
+index 00000000000..a4e0d6e6986
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/search/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++  constexpr std::array<int, 3> cam{{4, 5, 6}};
++
++  const auto outtt = std::search(ca0.begin(), ca0.end(),
++				 cam.begin(), cam.end(),
++				 std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/search_n/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/search_n/constexpr.cc
+new file mode 100644
+index 00000000000..8d09d107d99
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/search_n/constexpr.cc
+@@ -0,0 +1,30 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++
++  const auto outuu = std::search_n(car.begin(), car.end(), 2, 6);
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/set_difference/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/set_difference/constexpr.cc
+new file mode 100644
+index 00000000000..c13b5a2f498
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/set_difference/constexpr.cc
+@@ -0,0 +1,37 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outvv = std::set_difference(ca0.begin(), ca0.end(),
++					 cas.begin(), cas.end(), out0.begin());
++
++  const auto outww = std::set_difference(ca0.begin(), ca0.end(),
++				         cas.begin(), cas.end(),
++				         out0.begin(), std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/set_intersection/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/set_intersection/constexpr.cc
+new file mode 100644
+index 00000000000..e8e66d33116
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/set_intersection/constexpr.cc
+@@ -0,0 +1,38 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outxx = std::set_intersection(ca0.begin(), ca0.end(),
++					   cas.begin(), cas.end(),
++					   out0.begin());
++
++  const auto outyy = std::set_intersection(ca0.begin(), ca0.end(),
++					   cas.begin(), cas.end(),
++					   out0.begin(), std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/set_symmetric_difference/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/set_symmetric_difference/constexpr.cc
+new file mode 100644
+index 00000000000..c13b5a2f498
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/set_symmetric_difference/constexpr.cc
+@@ -0,0 +1,37 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto outvv = std::set_difference(ca0.begin(), ca0.end(),
++					 cas.begin(), cas.end(), out0.begin());
++
++  const auto outww = std::set_difference(ca0.begin(), ca0.end(),
++				         cas.begin(), cas.end(),
++				         out0.begin(), std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/set_union/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/set_union/constexpr.cc
+new file mode 100644
+index 00000000000..0ce222a1344
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/set_union/constexpr.cc
+@@ -0,0 +1,37 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto out11 = std::set_union(ca0.begin(), ca0.end(),
++				    cas.begin(), cas.end(), out0.begin());
++
++  const auto out22 = std::set_union(ca0.begin(), ca0.end(),
++				    cas.begin(), cas.end(),
++				    out0.begin(), std::less<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/transform/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/transform/constexpr.cc
+new file mode 100644
+index 00000000000..cf6fe1e66df
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/transform/constexpr.cc
+@@ -0,0 +1,36 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++
++  const auto out99 = std::transform(ca0.begin(), ca0.end(), out0.begin(),
++				    [del=6](int i){ return i + del; });
++
++  const auto out123 = std::transform(ca0.begin(), ca0.end(), ca0.begin(),
++				     out0.begin(),
++				     [](int i, int j){ return i + j; });
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/unique/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/unique/constexpr.cc
+new file mode 100644
+index 00000000000..d669265371d
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/unique/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ar1{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++  std::array<int, 12> ar2{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++
++  const auto out33 = std::unique(ar1.begin(), ar1.end());
++
++  const auto out44 = std::unique(ar2.begin(), ar2.end(), std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/unique_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/unique_copy/constexpr.cc
+new file mode 100644
+index 00000000000..5f2092612d4
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/unique_copy/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  std::array<int, 12> ar3{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++
++  const auto out55 = std::unique_copy(ar3.begin(), ar3.end(), out0.begin());
++
++  const auto out66 = std::unique_copy(ar3.begin(), ar3.end(), out0.begin(),
++				      std::equal_to<int>());
++}
+diff --git a/libstdc++-v3/testsuite/25_algorithms/upper_bound/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/upper_bound/constexpr.cc
+new file mode 100644
+index 00000000000..61235c967fa
+--- /dev/null
++++ b/libstdc++-v3/testsuite/25_algorithms/upper_bound/constexpr.cc
+@@ -0,0 +1,33 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <algorithm>
++#include <array>
++
++constexpr void
++test()
++{
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5,  6, 7, 8,  9, 10, 11}};
++
++  const auto out77 = std::upper_bound(ca0.begin(), ca0.end(), 6);
++
++  const auto out88 = std::upper_bound(ca0.begin(), ca0.end(), 6,
++				      std::less<int>());
++}

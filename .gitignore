@@ -1,2 +1,6 @@
 
+constexpr_array.o
+constexpr_exchange.o
 test_algo
+test_constexpr_algo
+test_constexpr_algo_help

@@ -1,0 +1,70 @@
+2019-03-16  Edward Smith-Rowland  <3dw4rd@verizon.net>
+
+	Implement C++20 Add Constexpr Modifiers to Functions in <algorithm>
+	and <utility> Headers.
+	Implement C++20 
+	* include/bits/algorithmfwd.h: 
+	* include/bits/cpp_type_traits.h: 
+	* include/bits/predefined_ops.h: 
+	* include/bits/stl_algo.h: 
+	* include/bits/stl_algobase.h: 
+	* include/bits/stl_heap.h: 
+	* include/bits/stl_iterator.h: 
+	* include/std/array: Make comparison ops constexpr.
+	* include/std/utility: Make exchange constexpr.
+	* testsuite/20_util/exchange/constexpr.cc: New.
+	* testsuite/23_containers/array/comparison_operators/constexpr.cc: New.
+	* testsuite/25_algorithms/adjacent_find/constexpr.cc: New.
+	* testsuite/25_algorithms/all_of/constexpr.cc: New.
+	* testsuite/25_algorithms/any_of/constexpr.cc: New.
+	* testsuite/25_algorithms/binary_search/constexpr.cc: New.
+	* testsuite/25_algorithms/copy/constexpr.cc: New.
+	* testsuite/25_algorithms/copy_backward/constexpr.cc: New.
+	* testsuite/25_algorithms/copy_if/constexpr.cc: New.
+	* testsuite/25_algorithms/copy_n/constexpr.cc: New.
+	* testsuite/25_algorithms/count/constexpr.cc: New.
+	* testsuite/25_algorithms/count_if/constexpr.cc: New.
+	* testsuite/25_algorithms/equal/constexpr.cc: New.
+	* testsuite/25_algorithms/equal_range/constexpr.cc: New.
+	* testsuite/25_algorithms/fill/constexpr.cc: New.
+	* testsuite/25_algorithms/fill_n/constexpr.cc: New.
+	* testsuite/25_algorithms/find/constexpr.cc: New.
+	* testsuite/25_algorithms/find_end/constexpr.cc: New.
+	* testsuite/25_algorithms/find_first_of/constexpr.cc: New.
+	* testsuite/25_algorithms/find_if/constexpr.cc: New.
+	* testsuite/25_algorithms/find_if_not/constexpr.cc: New.
+	* testsuite/25_algorithms/for_each/constexpr.cc: New.
+	* testsuite/25_algorithms/generate/constexpr.cc: New.
+	* testsuite/25_algorithms/generate_n/constexpr.cc: New.
+	* testsuite/25_algorithms/is_heap/constexpr.cc: New.
+	* testsuite/25_algorithms/is_heap_until/constexpr.cc: New.
+	* testsuite/25_algorithms/is_partitioned/constexpr.cc: New.
+	* testsuite/25_algorithms/is_permutation/constexpr.cc: New.
+	* testsuite/25_algorithms/is_sorted/constexpr.cc: New.
+	* testsuite/25_algorithms/is_sorted_until/constexpr.cc: New.
+	* testsuite/25_algorithms/lexicographical_compare/constexpr.cc: New.
+	* testsuite/25_algorithms/lower_bound/constexpr.cc: New.
+	* testsuite/25_algorithms/merge/constexpr.cc: New.
+	* testsuite/25_algorithms/mismatch/constexpr.cc: New.
+	* testsuite/25_algorithms/none_of/constexpr.cc: New.
+	* testsuite/25_algorithms/partition_copy/constexpr.cc: New.
+	* testsuite/25_algorithms/partition_point/constexpr.cc: New.
+	* testsuite/25_algorithms/remove/constexpr.cc: New.
+	* testsuite/25_algorithms/remove_copy/constexpr.cc: New.
+	* testsuite/25_algorithms/remove_copy_if/constexpr.cc: New.
+	* testsuite/25_algorithms/remove_if/constexpr.cc: New.
+	* testsuite/25_algorithms/replace_copy/constexpr.cc: New.
+	* testsuite/25_algorithms/replace_copy_if/constexpr.cc: New.
+	* testsuite/25_algorithms/replace_if/constexpr.cc: New.
+	* testsuite/25_algorithms/reverse_copy/constexpr.cc: New.
+	* testsuite/25_algorithms/rotate_copy/constexpr.cc: New.
+	* testsuite/25_algorithms/search/constexpr.cc: New.
+	* testsuite/25_algorithms/search_n/constexpr.cc: New.
+	* testsuite/25_algorithms/set_difference/constexpr.cc: New.
+	* testsuite/25_algorithms/set_intersection/constexpr.cc: New.
+	* testsuite/25_algorithms/set_symmetric_difference/constexpr.cc: New.
+	* testsuite/25_algorithms/set_union/constexpr.cc: New.
+	* testsuite/25_algorithms/transform/constexpr.cc: New.
+	* testsuite/25_algorithms/unique/constexpr.cc: New.
+	* testsuite/25_algorithms/unique_copy/constexpr.cc: New.
+	* testsuite/25_algorithms/upper_bound/constexpr.cc: New.
