@@ -502,7 +502,7 @@ index d7f8517a6ba..3e165c77707 100644
      __miter_base(_Iterator __it)
      { return __it; }
 diff --git a/libstdc++-v3/include/bits/predefined_ops.h b/libstdc++-v3/include/bits/predefined_ops.h
-index 65215c7918b..60f45841bb7 100644
+index 65215c7918b..d6effc92fc2 100644
 --- a/libstdc++-v3/include/bits/predefined_ops.h
 +++ b/libstdc++-v3/include/bits/predefined_ops.h
 @@ -56,19 +56,23 @@ namespace __ops
@@ -589,16 +589,20 @@ index 65215c7918b..60f45841bb7 100644
    inline _Iter_equal_to_val
    __iter_comp_val(_Iter_equal_to_iter)
    { return _Iter_equal_to_val(); }
-@@ -139,7 +152,7 @@ namespace __ops
-       template<typename _Iterator1, typename _Iterator2>
-         _GLIBCXX14_CONSTEXPR
+@@ -141,6 +154,12 @@ namespace __ops
          bool
--        operator()(_Iterator1 __it1, _Iterator2 __it2)
-+        operator()(_Iterator1 __it1, _Iterator2 __it2) const
+         operator()(_Iterator1 __it1, _Iterator2 __it2)
          { return bool(_M_comp(*__it1, *__it2)); }
++
++      template<typename _Iterator1, typename _Iterator2>
++        _GLIBCXX14_CONSTEXPR
++        bool
++        operator()(_Iterator1 __it1, _Iterator2 __it2) const
++        { return bool(_M_comp(*__it1, *__it2)); }
      };
  
-@@ -154,17 +167,20 @@ namespace __ops
+   template<typename _Compare>
+@@ -154,17 +173,20 @@ namespace __ops
      {
        _Compare _M_comp;
  
@@ -619,10 +623,16 @@ index 65215c7918b..60f45841bb7 100644
        explicit
        _Iter_comp_val(_Iter_comp_iter<_Compare>&& __comp)
  	: _M_comp(std::move(__comp._M_comp))
-@@ -172,17 +188,20 @@ namespace __ops
+@@ -172,17 +194,26 @@ namespace __ops
  #endif
  
        template<typename _Iterator, typename _Value>
++	_GLIBCXX20_CONSTEXPR
++	bool
++	operator()(_Iterator __it, const _Value& __val)
++	{ return bool(_M_comp(*__it, __val)); }
++
++      template<typename _Iterator, typename _Value>
 +	_GLIBCXX20_CONSTEXPR
  	bool
 -	operator()(_Iterator __it, _Value& __val)
@@ -642,7 +652,7 @@ index 65215c7918b..60f45841bb7 100644
      inline _Iter_comp_val<_Compare>
      __iter_comp_val(_Iter_comp_iter<_Compare> __comp)
      { return _Iter_comp_val<_Compare>(_GLIBCXX_MOVE(__comp)); }
-@@ -192,17 +211,20 @@ namespace __ops
+@@ -192,17 +223,20 @@ namespace __ops
      {
        _Compare _M_comp;
  
@@ -663,10 +673,16 @@ index 65215c7918b..60f45841bb7 100644
        explicit
        _Val_comp_iter(_Iter_comp_iter<_Compare>&& __comp)
  	: _M_comp(std::move(__comp._M_comp))
-@@ -210,17 +232,20 @@ namespace __ops
+@@ -210,17 +244,26 @@ namespace __ops
  #endif
  
        template<typename _Value, typename _Iterator>
++	_GLIBCXX20_CONSTEXPR
++	bool
++	operator()(const _Value& __val, _Iterator __it)
++	{ return bool(_M_comp(__val, *__it)); }
++
++      template<typename _Value, typename _Iterator>
 +	_GLIBCXX20_CONSTEXPR
  	bool
 -	operator()(_Value& __val, _Iterator __it)
@@ -685,7 +701,7 @@ index 65215c7918b..60f45841bb7 100644
      inline _Val_comp_iter<_Compare>
      __val_comp_iter(_Iter_comp_iter<_Compare> __comp)
      { return _Val_comp_iter<_Compare>(_GLIBCXX_MOVE(__comp)); }
-@@ -228,22 +253,25 @@ namespace __ops
+@@ -228,22 +271,25 @@ namespace __ops
    template<typename _Value>
      struct _Iter_equals_val
      {
@@ -715,7 +731,7 @@ index 65215c7918b..60f45841bb7 100644
      { return _Iter_equals_val<_Value>(__val); }
  
    template<typename _Iterator1>
-@@ -251,18 +279,21 @@ namespace __ops
+@@ -251,18 +297,21 @@ namespace __ops
      {
        _Iterator1 _M_it1;
  
@@ -738,7 +754,7 @@ index 65215c7918b..60f45841bb7 100644
      inline _Iter_equals_iter<_Iterator>
      __iter_comp_iter(_Iter_equal_to_iter, _Iterator __it)
      { return _Iter_equals_iter<_Iterator>(__it); }
-@@ -272,18 +303,21 @@ namespace __ops
+@@ -272,18 +321,27 @@ namespace __ops
      {
        _Predicate _M_pred;
  
@@ -751,9 +767,14 @@ index 65215c7918b..60f45841bb7 100644
        template<typename _Iterator>
 +	_GLIBCXX20_CONSTEXPR
  	bool
--	operator()(_Iterator __it)
-+	operator()(_Iterator __it) const
+ 	operator()(_Iterator __it)
  	{ return bool(_M_pred(*__it)); }
++
++      template<typename _Iterator>
++	_GLIBCXX20_CONSTEXPR
++	bool
++	operator()(_Iterator __it) const
++	{ return bool(_M_pred(*__it)); }
      };
  
    template<typename _Predicate>
@@ -761,7 +782,7 @@ index 65215c7918b..60f45841bb7 100644
      inline _Iter_pred<_Predicate>
      __pred_iter(_Predicate __pred)
      { return _Iter_pred<_Predicate>(_GLIBCXX_MOVE(__pred)); }
-@@ -292,20 +326,23 @@ namespace __ops
+@@ -292,20 +350,29 @@ namespace __ops
      struct _Iter_comp_to_val
      {
        _Compare _M_comp;
@@ -777,9 +798,14 @@ index 65215c7918b..60f45841bb7 100644
        template<typename _Iterator>
 +	_GLIBCXX20_CONSTEXPR
  	bool
--	operator()(_Iterator __it)
-+	operator()(_Iterator __it) const
+ 	operator()(_Iterator __it)
  	{ return bool(_M_comp(*__it, _M_value)); }
++
++      template<typename _Iterator>
++	_GLIBCXX20_CONSTEXPR
++	bool
++	operator()(_Iterator __it) const
++	{ return bool(_M_comp(*__it, _M_value)); }
      };
  
    template<typename _Compare, typename _Value>
@@ -788,7 +814,7 @@ index 65215c7918b..60f45841bb7 100644
      __iter_comp_val(_Compare __comp, _Value &__val)
      {
        return _Iter_comp_to_val<_Compare, _Value>(_GLIBCXX_MOVE(__comp), __val);
-@@ -317,17 +354,20 @@ namespace __ops
+@@ -317,17 +384,26 @@ namespace __ops
        _Compare _M_comp;
        _Iterator1 _M_it1;
  
@@ -800,9 +826,14 @@ index 65215c7918b..60f45841bb7 100644
        template<typename _Iterator2>
 +	_GLIBCXX20_CONSTEXPR
  	bool
--	operator()(_Iterator2 __it2)
-+	operator()(_Iterator2 __it2) const
+ 	operator()(_Iterator2 __it2)
  	{ return bool(_M_comp(*__it2, *_M_it1)); }
++
++      template<typename _Iterator2>
++	_GLIBCXX20_CONSTEXPR
++	bool
++	operator()(_Iterator2 __it2) const
++	{ return bool(_M_comp(*__it2, *_M_it1)); }
      };
  
    template<typename _Compare, typename _Iterator>
@@ -810,7 +841,7 @@ index 65215c7918b..60f45841bb7 100644
      inline _Iter_comp_to_iter<_Compare, _Iterator>
      __iter_comp_iter(_Iter_comp_iter<_Compare> __comp, _Iterator __it)
      {
-@@ -340,18 +380,21 @@ namespace __ops
+@@ -340,18 +416,27 @@ namespace __ops
      {
        _Predicate _M_pred;
  
@@ -823,9 +854,14 @@ index 65215c7918b..60f45841bb7 100644
        template<typename _Iterator>
 +	_GLIBCXX20_CONSTEXPR
  	bool
--	operator()(_Iterator __it)
-+	operator()(_Iterator __it) const
+ 	operator()(_Iterator __it)
  	{ return !bool(_M_pred(*__it)); }
++
++      template<typename _Iterator>
++	_GLIBCXX20_CONSTEXPR
++	bool
++	operator()(_Iterator __it) const
++	{ return !bool(_M_pred(*__it)); }
      };
  
    template<typename _Predicate>
@@ -2277,10 +2313,23 @@ index e9d90fa01f4..8ab0d72b0c2 100644
      -> decltype(__make_reverse_iterator(__miter_base(__it.base())))
      { return __make_reverse_iterator(__miter_base(__it.base())); }
 diff --git a/libstdc++-v3/include/std/array b/libstdc++-v3/include/std/array
-index 02c6f4b4dbe..1a83904fc63 100644
+index 02c6f4b4dbe..1c19b01775e 100644
 --- a/libstdc++-v3/include/std/array
 +++ b/libstdc++-v3/include/std/array
-@@ -248,16 +248,19 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+@@ -112,10 +112,12 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+       // No explicit construct/copy/destroy for aggregate type.
+ 
+       // DR 776.
++      _GLIBCXX20_CONSTEXPR
+       void
+       fill(const value_type& __u)
+       { std::fill_n(begin(), size(), __u); }
+ 
++      _GLIBCXX20_CONSTEXPR
+       void
+       swap(array& __other)
+       noexcept(_AT_Type::_Is_nothrow_swappable::value)
+@@ -248,16 +250,19 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
  
    // Array comparisons.
    template<typename _Tp, std::size_t _Nm>
@@ -2300,7 +2349,7 @@ index 02c6f4b4dbe..1a83904fc63 100644
      inline bool
      operator<(const array<_Tp, _Nm>& __a, const array<_Tp, _Nm>& __b)
      {
-@@ -266,16 +269,19 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+@@ -266,16 +271,19 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
      }
  
    template<typename _Tp, std::size_t _Nm>
@@ -2320,6 +2369,14 @@ index 02c6f4b4dbe..1a83904fc63 100644
      inline bool
      operator>=(const array<_Tp, _Nm>& __one, const array<_Tp, _Nm>& __two)
      { return !(__one < __two); }
+@@ -289,6 +297,7 @@ _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+       _GLIBCXX_STD_C::__array_traits<_Tp, _Nm>::_Is_swappable::value
+     >::type
+ #else
++    _GLIBCXX20_CONSTEXPR
+     void
+ #endif
+     swap(array<_Tp, _Nm>& __one, array<_Tp, _Nm>& __two)
 diff --git a/libstdc++-v3/include/std/utility b/libstdc++-v3/include/std/utility
 index c687c1d8697..7a7d21be4d6 100644
 --- a/libstdc++-v3/include/std/utility
@@ -2342,6 +2399,41 @@ index c687c1d8697..7a7d21be4d6 100644
  #endif
  
    // Stores a tuple of indices.  Used by tuple and pair, and by bind() to
+diff --git a/libstdc++-v3/testsuite/20_util/exchange/constexpr.cc b/libstdc++-v3/testsuite/20_util/exchange/constexpr.cc
+new file mode 100644
+index 00000000000..e05f67ca220
+--- /dev/null
++++ b/libstdc++-v3/testsuite/20_util/exchange/constexpr.cc
+@@ -0,0 +1,29 @@
++// Copyright (C) 2019 Free Software Foundation, Inc.
++//
++// This file is part of the GNU ISO C++ Library.  This library is free
++// software; you can redistribute it and/or modify it under the
++// terms of the GNU General Public License as published by the
++// Free Software Foundation; either version 3, or (at your option)
++// any later version.
++
++// This library is distributed in the hope that it will be useful,
++// but WITHOUT ANY WARRANTY; without even the implied warranty of
++// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++// GNU General Public License for more details.
++
++// You should have received a copy of the GNU General Public License along
++// with this library; see the file COPYING3.  If not see
++// <http://www.gnu.org/licenses/>.
++
++// { dg-options "-std=gnu++2a" }
++// { dg-do compile { target c++2a } }
++
++#include <utility>
++
++constexpr void
++test()
++{
++  double e = 2.71828182846;
++  constexpr double pi = 3.14159265359;
++  const auto x = std::exchange(e, pi);
++}
 diff --git a/libstdc++-v3/testsuite/23_containers/array/comparison_operators/constexpr.cc b/libstdc++-v3/testsuite/23_containers/array/comparison_operators/constexpr.cc
 new file mode 100644
 index 00000000000..075773a8581
@@ -2380,6 +2472,29 @@ index 00000000000..075773a8581
 +static_assert(a4 > a1);
 +static_assert(a1 <= a3);
 +static_assert(a4 >= a1);
+diff --git a/libstdc++-v3/testsuite/23_containers/array/tuple_interface/get_neg.cc b/libstdc++-v3/testsuite/23_containers/array/tuple_interface/get_neg.cc
+index f85b8adb4d4..8b26424e8d9 100644
+--- a/libstdc++-v3/testsuite/23_containers/array/tuple_interface/get_neg.cc
++++ b/libstdc++-v3/testsuite/23_containers/array/tuple_interface/get_neg.cc
+@@ -27,6 +27,6 @@ int n1 = std::get<1>(a);
+ int n2 = std::get<1>(std::move(a));
+ int n3 = std::get<1>(ca);
+ 
+-// { dg-error "static assertion failed" "" { target *-*-* } 309 }
+ // { dg-error "static assertion failed" "" { target *-*-* } 318 }
+-// { dg-error "static assertion failed" "" { target *-*-* } 326 }
++// { dg-error "static assertion failed" "" { target *-*-* } 327 }
++// { dg-error "static assertion failed" "" { target *-*-* } 335 }
+diff --git a/libstdc++-v3/testsuite/23_containers/array/tuple_interface/tuple_element_neg.cc b/libstdc++-v3/testsuite/23_containers/array/tuple_interface/tuple_element_neg.cc
+index 0a4b1c30bde..2bceb50e165 100644
+--- a/libstdc++-v3/testsuite/23_containers/array/tuple_interface/tuple_element_neg.cc
++++ b/libstdc++-v3/testsuite/23_containers/array/tuple_interface/tuple_element_neg.cc
+@@ -22,4 +22,4 @@
+ 
+ typedef std::tuple_element<1, std::array<int, 1>>::type type;
+ 
+-// { dg-error "static assertion failed" "" { target *-*-* } 365 }
++// { dg-error "static assertion failed" "" { target *-*-* } 374 }
 diff --git a/libstdc++-v3/testsuite/25_algorithms/adjacent_find/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/adjacent_find/constexpr.cc
 new file mode 100644
 index 00000000000..267c71717f0
@@ -3651,10 +3766,10 @@ index 00000000000..57f7d6a6350
 +}
 diff --git a/libstdc++-v3/testsuite/25_algorithms/partition_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/partition_copy/constexpr.cc
 new file mode 100644
-index 00000000000..773d51ecfad
+index 00000000000..10b4bd6331a
 --- /dev/null
 +++ b/libstdc++-v3/testsuite/25_algorithms/partition_copy/constexpr.cc
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,34 @@
 +// Copyright (C) 2019 Free Software Foundation, Inc.
 +//
 +// This file is part of the GNU ISO C++ Library.  This library is free
@@ -3683,6 +3798,7 @@ index 00000000000..773d51ecfad
 +{
 +  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
 +  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
++  std::array<int, 24> out1{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 +
 +  const auto outii = std::partition_copy(ca0.begin(), ca0.end(),
 +					 out0.begin(), out1.begin(),
@@ -3800,7 +3916,7 @@ index 00000000000..bc5849b14fd
 +}
 diff --git a/libstdc++-v3/testsuite/25_algorithms/remove_copy_if/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/remove_copy_if/constexpr.cc
 new file mode 100644
-index 00000000000..bca21b6ddb2
+index 00000000000..54cb1dd3857
 --- /dev/null
 +++ b/libstdc++-v3/testsuite/25_algorithms/remove_copy_if/constexpr.cc
 @@ -0,0 +1,32 @@
@@ -3830,7 +3946,7 @@ index 00000000000..bca21b6ddb2
 +constexpr void
 +test()
 +{
-+  std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
++  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
 +  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 +
 +  const auto outnn = std::remove_copy_if(ca0.begin(), ca0.end(), out0.begin(),
@@ -4391,10 +4507,10 @@ index 00000000000..d669265371d
 +}
 diff --git a/libstdc++-v3/testsuite/25_algorithms/unique_copy/constexpr.cc b/libstdc++-v3/testsuite/25_algorithms/unique_copy/constexpr.cc
 new file mode 100644
-index 00000000000..5f2092612d4
+index 00000000000..21de08ce3ae
 --- /dev/null
 +++ b/libstdc++-v3/testsuite/25_algorithms/unique_copy/constexpr.cc
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,34 @@
 +// Copyright (C) 2019 Free Software Foundation, Inc.
 +//
 +// This file is part of the GNU ISO C++ Library.  This library is free
@@ -4422,6 +4538,7 @@ index 00000000000..5f2092612d4
 +test()
 +{
 +  std::array<int, 12> ar3{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
++  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 +
 +  const auto out55 = std::unique_copy(ar3.begin(), ar3.end(), out0.begin());
 +

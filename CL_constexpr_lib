@@ -1,8 +1,8 @@
 2019-03-16  Edward Smith-Rowland  <3dw4rd@verizon.net>
 
-	Implement C++20 Add Constexpr Modifiers to Functions in <algorithm>
-	and <utility> Headers.
-	Implement C++20 
+	Implement C++20 p0202 - Add Constexpr Modifiers to Functions
+	in <algorithm> and <utility> Headers.
+	Implement C++20 p1023 - constexpr comparison operators for std::array.
 	* include/bits/algorithmfwd.h: 
 	* include/bits/cpp_type_traits.h: 
 	* include/bits/predefined_ops.h: 
@@ -12,6 +12,9 @@
 	* include/bits/stl_iterator.h: 
 	* include/std/array: Make comparison ops constexpr.
 	* include/std/utility: Make exchange constexpr.
+	* testsuite/23_containers/array/tuple_interface/get_neg.cc: Adjust.
+	* testsuite/23_containers/array/tuple_interface/
+	tuple_element_neg.cc: Adjust.
 	* testsuite/20_util/exchange/constexpr.cc: New.
 	* testsuite/23_containers/array/comparison_operators/constexpr.cc: New.
 	* testsuite/25_algorithms/adjacent_find/constexpr.cc: New.
