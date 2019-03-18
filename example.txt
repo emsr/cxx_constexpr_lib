@@ -1,0 +1,21 @@
+From the standard:
+
+constexpr void
+f(unsigned char *p, int n)
+{
+  if (std::is_constant_evaluated())
+    {
+      for (int k = 0; k < n; ++k)
+	p[k] = 0;
+    }
+  else
+    {
+      memset(p, 0, n);
+    }
+}
+
+You could roll a memcmp, a memmove, a memset.
+
+memory_compare()
+memory_move()
+memory_fill()

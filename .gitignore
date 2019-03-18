@@ -1,4 +1,5 @@
 
+synopsis.o
 constexpr_array.o
 constexpr_exchange.o
 test_algo

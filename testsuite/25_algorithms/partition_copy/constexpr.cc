@@ -26,6 +26,7 @@ test()
 {
   constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
   std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
+  std::array<int, 24> out1{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
   const auto outii = std::partition_copy(ca0.begin(), ca0.end(),
 					 out0.begin(), out1.begin(),

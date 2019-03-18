@@ -25,6 +25,7 @@ constexpr void
 test()
 {
   std::array<int, 12> ar3{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
+  std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
   const auto out55 = std::unique_copy(ar3.begin(), ar3.end(), out0.begin());
 
