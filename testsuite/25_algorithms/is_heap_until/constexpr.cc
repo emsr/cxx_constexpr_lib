@@ -21,7 +21,13 @@
 #include <algorithm>
 #include <array>
 
-constexpr void
+#ifndef __cpp_lib_constexpr_algorithms
+# error "Feature-test macro for constexpr algorithms missing"
+#elif __cpp_lib_constexpr_algorithms < 201711L
+# error "Feature-test macro for constexpr algorithms has wrong value"
+#endif
+
+constexpr bool
 test()
 {
   // heap
@@ -35,4 +41,8 @@ test()
 
   const auto outr = std::is_heap_until(ahu.begin(), ahu.end(),
 				       std::less<int>());
+
+  return true;
 }
+
+static_assert(test());

@@ -21,9 +21,19 @@
 #include <algorithm>
 #include <array>
 
-constexpr void
+#ifndef __cpp_lib_constexpr_algorithms
+# error "Feature-test macro for constexpr algorithms missing"
+#elif __cpp_lib_constexpr_algorithms < 201711L
+# error "Feature-test macro for constexpr algorithms has wrong value"
+#endif
+
+constexpr bool
 test()
 {
   std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
   std::fill(ma0.begin(), ma0.end(), 66);
+
+  return true;
 }
+
+static_assert(test());

@@ -21,10 +21,20 @@
 #include <algorithm>
 #include <array>
 
-constexpr void
+#ifndef __cpp_lib_constexpr_algorithms
+# error "Feature-test macro for constexpr algorithms missing"
+#elif __cpp_lib_constexpr_algorithms < 201711L
+# error "Feature-test macro for constexpr algorithms has wrong value"
+#endif
+
+constexpr bool
 test()
 {
   std::array<int, 12> ar4{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
 
   const auto outkk = std::remove(ar4.begin(), ar4.end(), 7);
+
+  return true;
 }
+
+static_assert(test());

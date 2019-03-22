@@ -21,7 +21,13 @@
 #include <algorithm>
 #include <array>
 
-constexpr void
+#ifndef __cpp_lib_constexpr_algorithms
+# error "Feature-test macro for constexpr algorithms missing"
+#elif __cpp_lib_constexpr_algorithms < 201711L
+# error "Feature-test macro for constexpr algorithms has wrong value"
+#endif
+
+constexpr bool
 test()
 {
   constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
@@ -31,4 +37,8 @@ test()
   const auto outii = std::partition_copy(ca0.begin(), ca0.end(),
 					 out0.begin(), out1.begin(),
 					 [](int i){ return i % 2 == 0; });
+
+  return true;
 }
+
+static_assert(test());

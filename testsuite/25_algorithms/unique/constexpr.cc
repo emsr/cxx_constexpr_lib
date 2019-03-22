@@ -21,7 +21,13 @@
 #include <algorithm>
 #include <array>
 
-constexpr void
+#ifndef __cpp_lib_constexpr_algorithms
+# error "Feature-test macro for constexpr algorithms missing"
+#elif __cpp_lib_constexpr_algorithms < 201711L
+# error "Feature-test macro for constexpr algorithms has wrong value"
+#endif
+
+constexpr bool
 test()
 {
   std::array<int, 12> ar1{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
@@ -30,4 +36,8 @@ test()
   const auto out33 = std::unique(ar1.begin(), ar1.end());
 
   const auto out44 = std::unique(ar2.begin(), ar2.end(), std::equal_to<int>());
+
+  return true;
 }
+
+static_assert(test());

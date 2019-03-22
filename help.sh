@@ -94,8 +94,16 @@ test()
 EOM
 done
 
+
 for subdir in $(ls $algo)
 do
   dir=$algo/$subdir
   cp $dir/constexpr.cc /home/ed/gcc_git/libstdc++-v3/$dir
+done
+
+
+for subdir in $(ls $algo)
+do
+  dir=$algo/$subdir
+  cp /home/ed/gcc/libstdc++-v3/$dir/constexpr.cc $dir
 done

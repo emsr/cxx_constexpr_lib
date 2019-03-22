@@ -21,6 +21,12 @@
 #include <algorithm>
 #include <array>
 
+#ifndef __cpp_lib_constexpr_algorithms
+# error "Feature-test macro for constexpr algorithms missing"
+#elif __cpp_lib_constexpr_algorithms < 201711L
+# error "Feature-test macro for constexpr algorithms has wrong value"
+#endif
+
 constexpr void
 test()
 {
@@ -28,4 +34,8 @@ test()
 
   const auto out9 = std::count_if(ca0.begin(), ca0.end(),
 				  [](int i){ return i % 2 == 0; });
+
+  return true;
 }
+
+static_assert(test());

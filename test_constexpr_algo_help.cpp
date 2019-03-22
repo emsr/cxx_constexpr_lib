@@ -2,7 +2,7 @@
 #include <array>
 #include <algorithm>
 
-constexpr void
+constexpr bool
 test_constexpr_algo()
 {
   constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
@@ -265,10 +265,12 @@ test_constexpr_algo()
 
   const auto out88 = std::upper_bound(ca0.begin(), ca0.end(), 6,
 				      std::less<int>());
+
+  return true;
 }
 
 int
 main()
 {
-  test_constexpr_algo();
+  static_assert(test_constexpr_algo());
 }
