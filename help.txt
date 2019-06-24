@@ -1,0 +1,7 @@
+FAIL: 25_algorithms/copy/58982.cc (test for excess errors)
+FAIL: 25_algorithms/copy_n/58982.cc (test for excess errors)
+
+FAIL: 25_algorithms/copy/move_iterators/69478.cc (test for excess errors)
+FAIL: 25_algorithms/copy_backward/move_iterators/69478.cc (test for excess errors)
+FAIL: 25_algorithms/move/69478.cc (test for excess errors)
+FAIL: 25_algorithms/move_backward/69478.cc (test for excess errors)
