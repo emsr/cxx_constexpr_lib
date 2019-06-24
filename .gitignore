@@ -1,7 +1,17 @@
 
+test_constexpr_iter.o
 synopsis.o
 constexpr_array.o
 constexpr_exchange.o
 test_algo
 test_constexpr_algo
 test_constexpr_algo_help
+memory
+test_1
+copy_69478_cxx17.o
+copy_backward_69478_cxx17.o
+move_69478_cxx17.o
+move_backward_69478_cxx17.o
+uninitialized_copy_64476.o
+copy
+test_constexpr_swap_help
