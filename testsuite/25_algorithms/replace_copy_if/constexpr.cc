@@ -27,16 +27,17 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
   std::array<int, 24> out0{{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 
-  const auto outpp = std::replace_copy_if(ca0.begin(), ca0.end(), out0.begin(),
+  const auto outpp = std::replace_copy_if(ca0.begin(), ca0.end(),
+					  out0.begin(),
 					  [](int i){ return i < 6; }, 66);
 
-  return true;
+  return outpp == out0.begin() + (ca0.end() - ca0.begin());
 }
 
 static_assert(test());

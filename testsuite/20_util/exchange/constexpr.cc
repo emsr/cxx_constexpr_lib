@@ -20,10 +20,14 @@
 
 #include <utility>
 
-constexpr void
+constexpr bool
 test()
 {
   double e = 2.71828182846;
   constexpr double pi = 3.14159265359;
   const auto x = std::exchange(e, pi);
+
+  return x == e;
 }
+
+static_assert(test());

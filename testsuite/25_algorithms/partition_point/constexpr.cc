@@ -27,15 +27,15 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> caeo{{0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 11}};
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> caeo{{0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 11}};
-
   const auto outjj = std::partition_point(caeo.begin(), caeo.end(),
 					  [](int i){ return i % 2 == 0; });
 
-  return true;
+  return outjj == caeo.begin() + 6;
 }
 
 static_assert(test());

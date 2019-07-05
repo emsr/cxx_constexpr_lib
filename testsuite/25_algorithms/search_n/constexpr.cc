@@ -27,14 +27,17 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
+
+constexpr auto outuu = std::search_n(car.begin(), car.end(), 2, 6);
+
+constexpr auto outuv = std::search_n(car.begin(), car.end(), 2, 9,
+				     [](int i, int j){ return i == j; });
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
-
-  const auto outuu = std::search_n(car.begin(), car.end(), 2, 6);
-
-  return true;
+  return outuu == car.begin() + 6 && outuv == car.begin() + 9 ;
 }
 
 static_assert(test());

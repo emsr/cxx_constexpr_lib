@@ -27,14 +27,14 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 6> cae{{0, 2, 4, 6, 8, 10}};
+
+constexpr auto out2 = std::all_of(cae.begin(), cae.end(),
+			          [](int i){ return i % 2 == 0; });
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 6> cae{{0, 2, 4, 6, 8, 10}};
-
-  const auto out2 = std::all_of(cae.begin(), cae.end(),
-			        [](int i){ return i % 2 == 0; });
-
   return true;
 }
 

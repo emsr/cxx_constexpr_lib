@@ -27,15 +27,15 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
+
+constexpr auto outk = std::find_if_not(ca0.begin(), ca0.end(),
+				       [](int i){ return i <= 6; });
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
-
-  const auto outk = std::find_if_not(ca0.begin(), ca0.end(),
-				     [](int i){ return i <= 6; });
-
-  return true;
+  return outk == ca0.begin() + 7;
 }
 
 static_assert(test());

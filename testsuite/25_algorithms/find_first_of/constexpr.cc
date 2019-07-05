@@ -27,20 +27,20 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6,  7,  8,  9, 10, 11}};
+constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
+
+constexpr auto outh = std::find_first_of(ca0.begin(), ca0.end(),
+					 cas.begin(), cas.end());
+
+constexpr auto outi = std::find_first_of(ca0.begin(), ca0.end(),
+					 cas.begin(), cas.end(),
+					[](int i, int j){ return i + 1 == j; });
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
-  constexpr std::array<int, 12> cas{{3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
-
-  const auto outh = std::find_first_of(ca0.begin(), ca0.end(),
-				       cas.begin(), cas.end());
-
-  const auto outi = std::find_first_of(ca0.begin(), ca0.end(),
-				       cas.begin(), cas.end(),
-				       [](int i, int j){ return i + 1 == j; });
-
-  return true;
+  return outh == ca0.begin() + 3 && outi == ca0.begin() + 2;
 }
 
 static_assert(test());

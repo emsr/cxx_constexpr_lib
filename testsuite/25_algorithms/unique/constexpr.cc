@@ -37,7 +37,7 @@ test()
 
   const auto out44 = std::unique(ar2.begin(), ar2.end(), std::equal_to<int>());
 
-  return true;
+  return out33 == ar1.begin() + 10 && out44 == ar2.begin() + 10;
 }
 
 static_assert(test());

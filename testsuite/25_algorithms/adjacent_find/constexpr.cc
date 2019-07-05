@@ -27,17 +27,17 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
+
+constexpr auto out0x = std::adjacent_find(car.begin(), car.end());
+
+constexpr auto out1x = std::adjacent_find(car.begin(), car.end(),
+					  std::equal_to<int>());
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> car{{0, 1, 2, 3, 4, 5, 6, 6, 8, 9, 9, 11}};
-
-  const auto out0x = std::adjacent_find(car.begin(), car.end());
-
-  const auto out1x = std::adjacent_find(car.begin(), car.end(),
-					std::equal_to<int>());
-
-  return true;
+  return out0x == car.begin() + 6 && out1x == car.begin() + 6;
 }
 
 static_assert(test());

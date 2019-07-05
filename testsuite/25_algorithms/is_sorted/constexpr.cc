@@ -27,17 +27,17 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
+
+constexpr auto outv = std::is_sorted(ca0.begin(), ca0.end());
+
+constexpr auto outw = std::is_sorted(ca0.begin(), ca0.end(),
+				     std::equal_to<int>());
+
 constexpr bool
 test()
 {
-  constexpr std::array<int, 12> ca0{{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}};
-
-  const auto outv = std::is_sorted(ca0.begin(), ca0.end());
-
-  const auto outw = std::is_sorted(ca0.begin(), ca0.end(),
-				   std::equal_to<int>());
-
-  return true;
+  return outv && outw;
 }
 
 static_assert(test());

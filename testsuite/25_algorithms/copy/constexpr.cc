@@ -35,7 +35,7 @@ test()
 
   const auto out6 = std::copy(ca0.begin(), ca0.begin() + 8, ma0.begin() + 2);
 
-  return true;
+  return out6 == ma0.begin() + 10;
 }
 
 static_assert(test());

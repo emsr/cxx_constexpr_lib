@@ -34,7 +34,7 @@ test()
 
   const auto outl = std::generate_n(ma0.begin(), 6, [](){ return 42; });
 
-  return true;
+  return outl == ma0.begin() + 6;
 }
 
 static_assert(test());

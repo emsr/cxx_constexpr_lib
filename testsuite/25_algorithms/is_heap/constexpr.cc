@@ -27,21 +27,21 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+// heap
+constexpr std::array<int, 23>
+ah{{22,
+    21, 20,
+    17, 16, 19, 18,
+    11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4}};
+
+constexpr auto outo = std::is_heap(ah.begin(), ah.end());
+
+constexpr auto outp = std::is_heap(ah.begin(), ah.end(), std::less<int>());
+
 constexpr bool
 test()
 {
-  // heap
-  constexpr std::array<int, 23>
-  ah{{22,
-      21, 20,
-      17, 16, 19, 18,
-      11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4}};
-
-  const auto outo = std::is_heap(ah.begin(), ah.end());
-
-  const auto outp = std::is_heap(ah.begin(), ah.end(), std::less<int>());
-
-  return true;
+  return outo && outp;
 }
 
 static_assert(test());

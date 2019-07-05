@@ -34,7 +34,7 @@ test()
 
   const auto outkk = std::remove(ar4.begin(), ar4.end(), 7);
 
-  return true;
+  return outkk == ar4.begin() + 11;
 }
 
 static_assert(test());

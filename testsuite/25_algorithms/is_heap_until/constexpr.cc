@@ -27,22 +27,22 @@
 # error "Feature-test macro for constexpr algorithms has wrong value"
 #endif
 
+// heap
+constexpr std::array<int, 23>
+ahu{{22,
+     21, 20,
+     17, 16, 19, 18,//v
+     11, 10,  9,  8, 23, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4}};
+
+constexpr auto outq = std::is_heap_until(ahu.begin(), ahu.end());
+
+constexpr auto outr = std::is_heap_until(ahu.begin(), ahu.end(),
+					 std::less<int>());
+
 constexpr bool
 test()
 {
-  // heap
-  constexpr std::array<int, 23>
-  ahu{{22,
-       21, 20,
-       17, 16, 19, 18,//v
-       11, 10,  9,  8, 23, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4}};
-
-  const auto outq = std::is_heap_until(ahu.begin(), ahu.end());
-
-  const auto outr = std::is_heap_until(ahu.begin(), ahu.end(),
-				       std::less<int>());
-
-  return true;
+  return outq == ahu.begin() + 11 && outr == ahu.begin() + 11;
 }
 
 static_assert(test());

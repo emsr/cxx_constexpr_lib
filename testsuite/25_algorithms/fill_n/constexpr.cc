@@ -32,9 +32,9 @@ test()
 {
   std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-  const auto outd = std::fill_n(ma0.begin() + 5, 6, 77);
+  const auto outd = std::fill_n(ma0.begin(), 6, 77);
 
-  return true;
+  return outd == ma0.begin() + 6;
 }
 
 static_assert(test());

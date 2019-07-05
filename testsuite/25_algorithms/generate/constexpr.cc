@@ -32,9 +32,9 @@ test()
 {
   std::array<int, 12> ma0{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
-  const auto outl = std::generate_n(ma0.begin(), 6, [](){ return 42; });
+  std::generate(ma0.begin(), ma0.begin() + 6, [](){ return 42; });
 
-  return true;
+  return ma0[5] == 42;
 }
 
 static_assert(test());
