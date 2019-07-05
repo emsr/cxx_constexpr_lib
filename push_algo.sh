@@ -1,5 +1,10 @@
 #! /bin/bash
 
+cp  testsuite/20_util/exchange/constexpr.cc				../gcc_git/libstdc++-v3/testsuite/20_util/exchange/constexpr.cc
+
+cp  testsuite/23_containers/array/comparison_operators/constexpr.cc	../gcc_git/libstdc++-v3/testsuite/23_containers/array/comparison_operators/constexpr.cc
+
+
 cp  testsuite/25_algorithms/adjacent_find/constexpr.cc			../gcc_git/libstdc++-v3/testsuite/25_algorithms/adjacent_find/constexpr.cc
 cp  testsuite/25_algorithms/all_of/constexpr.cc				../gcc_git/libstdc++-v3/testsuite/25_algorithms/all_of/constexpr.cc
 cp  testsuite/25_algorithms/any_of/constexpr.cc				../gcc_git/libstdc++-v3/testsuite/25_algorithms/any_of/constexpr.cc
