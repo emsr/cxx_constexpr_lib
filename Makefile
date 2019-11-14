@@ -1,17 +1,20 @@
 
 #CXX = ../bin_git_constexpr/bin/g++ -std=c++2a
-CXX = ../bin_constexpr_lib/bin/g++ -std=c++2a
+CXX = ../bin_constexpr_lib/bin/g++ -std=c++2a -g
 
-CXX17 = ../bin_constexpr_lib/bin/g++ -std=c++17
+CXX17 = ../bin_constexpr_lib/bin/g++ -std=c++17 -g
 
 all: test_1 \
-  copy_69478_cxx20.o copy_69478_cxx17.o \
-  copy_backward_69478_cxx20.o copy_backward_69478_cxx17.o \
-  move_69478_cxx20.o move_69478_cxx17.o \
-  move_backward_69478_cxx20.o move_backward_69478_cxx17.o \
-  copy_58982.o copy_n_58982.o uninitialized_copy_64476.o synopsis.o constexpr_array.o constexpr_exchange.o \
-  test_algo test_constexpr_algo test_constexpr_algo_help \
-  test_constexpr_swap_help
+  copy_69478_cxx17.o \
+  copy_backward_69478_cxx17.o \
+  move_69478_cxx17.o \
+  move_backward_69478_cxx17.o \
+  uninitialized_copy_64476.o synopsis.o constexpr_array.o constexpr_exchange.o \
+  test_algo test_constexpr_algo_help \
+  test_constexpr_swap_help test_constexpr_misc_help
+
+# copy_69478_cxx20.o copy_backward_69478_cxx20.o move_69478_cxx20.o move_backward_69478_cxx20.o test_constexpr_algo
+# copy_58982.o copy_n_58982.o
 
 memory: memory.cpp
 	$(CXX) -g -o memory memory.cpp
@@ -75,6 +78,9 @@ test_constexpr_algo_help: test_constexpr_algo_help.cpp
 
 test_constexpr_swap_help: test_constexpr_swap_help.cpp
 	$(CXX) -o test_constexpr_swap_help test_constexpr_swap_help.cpp
+
+test_constexpr_misc_help: test_constexpr_misc_help.cpp
+	$(CXX) -o test_constexpr_misc_help test_constexpr_misc_help.cpp
 
 clean:
 	rm -f *.o
