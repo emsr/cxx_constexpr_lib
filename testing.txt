@@ -1,8 +1,16 @@
 
-make check RUNTESTFLAGS=--target_board=unix/-std=gnu++2a -k -j4
+make check -k -j4 RUNTESTFLAGS=--target_board=unix/-std=gnu++2a
 
 make check -k -j4 RUNTESTFLAGS="--target_board=unix/-std=gnu++2a conformance.exp=25_algorithms/*"
 
 make check -k -j4 RUNTESTFLAGS="--target_board=unix/-std=gnu++2a conformance.exp=23_containers/array/*"
 
 make check -k -j4 RUNTESTFLAGS="--target_board=unix/-std=gnu++2a conformance.exp=21_strings/basic_string_view/*"
+
+make check -k RUNTESTFLAGS="--target_board=unix/-std=gnu++2a conformance.exp=20_util/exchange/*"
+
+
+
+make check -k -j2 conformance.exp=tr1/5_numerical_facilities/special_functions
+
+make check -k -j2 conformance.exp=special_functions

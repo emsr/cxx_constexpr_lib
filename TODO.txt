@@ -1,0 +1,70 @@
+1. This must be constexpr: __builtin_memchr, __builtin_memcmp
+
+  Find out how they did it...
+
+2. Is memset supposed to work at the byte level?
+
+  <cstring>
+  function memset
+
+  void * memset ( void * ptr, int value, size_t num );
+
+  Fill block of memory
+  Sets the first num bytes of the block of memory pointed by ptr to the specified value (interpreted as an unsigned char).
+
+  So yeah.
+
+  The wchar_t specialization of char_traits uses wmemmove, wmemset
+
+
+3. A move algorithm or three to match copy would be nice.
+
+  From the generic char_traits:
+
+    template<typename _CharT>
+      _GLIBCXX20_CONSTEXPR typename char_traits<_CharT>::char_type*
+      char_traits<_CharT>::
+      move(char_type* __s1, const char_type* __s2, std::size_t __n)
+      {
+	if (__n == 0)
+	  return __s1;
+  >>>      return static_cast<_CharT*>(__memmove<true>(__s1, __s2,
+  >>>						    __n * sizeof(char_type)));
+  Say this:
+  +++   std::move(__s1, __s2 + __n, __s1);
+      }
+
+    template<typename _CharT>
+      _GLIBCXX20_CONSTEXPR typename char_traits<_CharT>::char_type*
+      char_traits<_CharT>::
+      copy(char_type* __s1, const char_type* __s2, std::size_t __n)
+      {
+	// NB: Inline std::copy so no recursive dependencies.
+	std::copy(__s2, __s2 + __n, __s1);
+	return __s1;
+      }
+
+    template<typename _CharT>
+      _GLIBCXX20_CONSTEXPR typename char_traits<_CharT>::char_type*
+      char_traits<_CharT>::
+      assign(char_type* __s, std::size_t __n, char_type __a)
+      {
+	// NB: Inline std::fill_n so no recursive dependencies.
+	std::fill_n(__s, __n, __a);
+	return __s;
+      }
+
+4. It would be nice to hit include/ext/pod_char_traits.h
+
+  I think this is where char_traits gets __gnu_cxx::char_traits?
+  No, this defines a POD character wrapper and a specialization of std::char_traits for it.
+  See who uses it. How to test it...
+  testsuite/ext/pod_char_traits.cc
+
+5. Ask the powers:
+  p1023r0 make array comparisons constexpr.
+  Should we change
+    __cpp_lib_array_constexpr 201805L
+  from
+    __cpp_lib_array_constexpr 201603L
+  ?
